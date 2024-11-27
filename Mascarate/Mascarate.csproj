@@ -1,9 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net9.0</TargetFramework>
-        <ImplicitUsings>enable</ImplicitUsings>
-        <Nullable>enable</Nullable>
+        <TargetFramework>netstandard2.0</TargetFramework>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <PackageId>Mascarate</PackageId>
+        <Version>1.0.0</Version>
+        <Authors>Isaque Schuwarte Silva</Authors>
+        <Description>Mascarate is a lightweight, easy-to-use library for formatting, validating and removing masks in C# strings. Ideal for dealing with data such as CPF, CNPJ, telephone numbers, zip codes and much more.</Description>
     </PropertyGroup>
 
 </Project>

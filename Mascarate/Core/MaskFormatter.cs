@@ -1,6 +1,7 @@
-﻿namespace Mascarate.Core;
-
-public class MaskFormatter
+﻿namespace Mascarate.Core
 {
-    
+    public class MaskFormatter
+    {
+
+    }
 }

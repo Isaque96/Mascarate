@@ -1,6 +1,12 @@
-﻿namespace Mascarate.Models;
-
-public class MaskFormat(string mask)
+﻿namespace Mascarate.Models
 {
-    public string Mask { get; set; } = mask;
+    public class MaskFormat
+    {
+        public MaskFormat(string mask)
+        {
+            Mask = mask;
+        }
+        
+        public string Mask { get; set; }
+    }
 }

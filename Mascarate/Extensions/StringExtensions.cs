@@ -1,18 +1,22 @@
-namespace Mascarate.Extensions;
+using System;
 
-public static class StringExtensions
+namespace Mascarate.Extensions
 {
-    public static string Mascarate(this string str, string? mask)
+    public static class StringExtensions
     {
-        if (string.IsNullOrWhiteSpace(mask) ||
-            string.IsNullOrEmpty(mask))
-            throw new ArgumentNullException(nameof(mask));
-        
-        return str;
-    }
-
-    public static string UnMascarate(this string str)
-    {
-        return str;
+        public static string Mascarate(this string str, string mask)
+        {
+            if (string.IsNullOrWhiteSpace(mask) ||
+                string.IsNullOrEmpty(mask))
+                throw new ArgumentNullException(nameof(mask));
+            
+            return str;
+        }
+    
+        public static string UnMascarate(this string str)
+        {
+            return str;
+        }
     }
 }
+

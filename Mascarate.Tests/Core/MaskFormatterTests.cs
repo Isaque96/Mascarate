@@ -1,6 +1,4 @@
-﻿using Xunit;
-
-namespace Mascarate.Tests.Core;
+﻿namespace Mascarate.Tests.Core;
 
 public class MaskFormatterTests
 {

@@ -6,6 +6,6 @@ namespace Mascarate.Configurations
         public const char AlphaNumericMask = '*';
         public const char NumericMask = '#';
 
-        public static readonly char[] Masks = new[] { LetterMask, AlphaNumericMask, NumericMask };
+        public static readonly char[] Masks = { LetterMask, AlphaNumericMask, NumericMask };
     }
 }

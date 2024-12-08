@@ -21,17 +21,41 @@ public class StringExtensionsTests
         #endregion
     }
     
-    [Fact]
-    public void Mascarate_WhenMaskIsNumericCorrectAndValueIsNumericOnly_ShouldReturnValuesWithMask()
+    [Theory]
+    [InlineData("###.###.###-##", "12345678910", "123.456.789-10")]
+    [InlineData("###-###", "123456", "123-456")]
+    [InlineData("###.###", "456789", "456.789")]
+    public void Mascarate_WhenMaskIsNumericCorrectAndValueIsNumericOnly_ShouldReturnValuesWithMask(
+        string mask,
+        string value,
+        string expectedResult
+    )
     {
-        #region Arrange
-        const string mask = "###.###.###-##";
-        const string numbers = "12345678910";
-        const string expectedResult = "123.456.789-10";
-        #endregion
+        // No Arrange Needed
 
         #region Act
-        var result = numbers.Mascarate(mask);
+        var result = value.Mascarate(mask);
+        #endregion
+
+        #region Assert
+        Assert.Equal(expectedResult, result);
+        #endregion
+    }
+
+    [Theory]
+    [InlineData("12@@@", "JOH", "12JOH")]
+    [InlineData("12@@@", "JES", "12JES")]
+    [InlineData("12@@@", "BAB", "12BAB")]
+    public void Mascarate_WhenMaskIsWithLettersAndValueIsLettersOnly_ShouldReturnValuesWithMask(
+        string mask,
+        string value,
+        string expectedResult
+    )
+    {
+        // No Arrange Needed
+        
+        #region Act
+        var result = value.Mascarate(mask);
         #endregion
 
         #region Assert
@@ -76,17 +100,20 @@ public class StringExtensionsTests
         #endregion
     }
 
-    [Fact]
-    public void UnMascarate_WhenMaskIsNumericCorrectAndValueIsNumericOnly_ShouldReturnValuesWithoutMask()
+    [Theory]
+    [InlineData("###.###.###-##", "123.456.789-10", "12345678910")]
+    [InlineData("###-###", "123-456", "123456")]
+    [InlineData("###.###", "456.789", "456789")]
+    public void UnMascarate_WhenMaskIsNumericCorrectAndValueIsNumericOnly_ShouldReturnValuesWithoutMask(
+        string mask,
+        string value,
+        string expectedResult
+    )
     {
-        #region Arrange
-        const string mask = "###.###.###-##";
-        const string numbers = "123.456.789-10";
-        const string expectedResult = "12345678910";
-        #endregion
+        // Non Arrange Needed
         
         #region Act
-        var result = numbers.UnMascarate(mask);
+        var result = value.UnMascarate(mask);
         #endregion
         
         #region Assert

@@ -22,7 +22,7 @@ public class StringExtensionsTests
     }
     
     [Fact]
-    public void FormatMask_WhenMaskIsNumericCorrectAndValueIsNumericOnly_ShouldReturnValuesWithMask()
+    public void Mascarate_WhenMaskIsNumericCorrectAndValueIsNumericOnly_ShouldReturnValuesWithMask()
     {
         #region Arrange
         const string mask = "###.###.###-##";
@@ -40,7 +40,7 @@ public class StringExtensionsTests
     }
     
     [Fact]
-    public void FormatMask_WhenMaskIsNumericCorrectAndValueIsNotNumericOnly_ShouldThrowArgumentException()
+    public void Mascarate_WhenMaskIsNumericCorrectAndValueIsNotNumericOnly_ShouldThrowArgumentException()
     {
         #region Arrange
         const string mask = "###.###.###-##";
@@ -56,6 +56,41 @@ public class StringExtensionsTests
 
         #region Assert
         Assert.Equal(expectedResult, exception.Message);
+        #endregion
+    }
+
+    [Fact]
+    public void Mascarate_WhenMaskIsNotInTheRightLengthWithValue_ShouldThrow()
+    {
+        #region Arrange
+        const string mask = "##-##";
+        const string numbers = "123";
+        #endregion
+
+        #region Act
+        var exception = Assert.Throws<MissingValuesException>(() => numbers.Mascarate(mask));
+        #endregion
+
+        #region Assert
+        Assert.Equal("The input value length does not match the number of mask placeholders.", exception.Message);
+        #endregion
+    }
+
+    [Fact]
+    public void UnMascarate_WhenMaskIsNumericCorrectAndValueIsNumericOnly_ShouldReturnValuesWithoutMask()
+    {
+        #region Arrange
+        const string mask = "###.###.###-##";
+        const string numbers = "123.456.789-10";
+        const string expectedResult = "12345678910";
+        #endregion
+        
+        #region Act
+        var result = numbers.UnMascarate(mask);
+        #endregion
+        
+        #region Assert
+        Assert.Equal(expectedResult, result);
         #endregion
     }
 }

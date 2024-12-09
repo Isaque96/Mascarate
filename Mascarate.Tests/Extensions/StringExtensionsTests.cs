@@ -62,6 +62,26 @@ public class StringExtensionsTests
         Assert.Equal(expectedResult, result);
         #endregion
     }
+
+    [Fact]
+    public void Mascarate_WhenHasSkipOnMaskType_ShouldReturnTheLiteralValue()
+    {
+        #region Arrange
+        const string mask = @"##\**";
+        const string value = "12A";
+        const string expectedResult = "12*A";
+        #endregion
+
+        #region Act
+        var result = value.Mascarate(mask);
+        #endregion
+
+        #region Assert
+        Assert.NotNull(result);
+        Assert.NotEmpty(result);
+        Assert.Equal(expectedResult, result);
+        #endregion
+    }
     
     [Fact]
     public void Mascarate_WhenMaskIsNumericCorrectAndValueIsNotNumericOnly_ShouldThrowArgumentException()

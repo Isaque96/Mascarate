@@ -1,6 +1,5 @@
 using System;
 using Mascarate.Configurations;
-using Mascarate.Utils;
 
 namespace Mascarate.Exceptions
 {

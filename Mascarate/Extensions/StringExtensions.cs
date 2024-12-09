@@ -1,8 +1,7 @@
 using System;
-using System.Linq;
-using Mascarate.Configurations;
 using Mascarate.Core;
 using Mascarate.Exceptions;
+using Mascarate.Utils;
 
 namespace Mascarate.Extensions
 {
@@ -17,8 +16,8 @@ namespace Mascarate.Extensions
             if (string.IsNullOrWhiteSpace(input) ||
                 string.IsNullOrEmpty(input))
                 throw new ArgumentNullException(nameof(input));
-
-            if (input.Length != mask.Count(c => MaskTypes.Masks.Contains(c)))
+            
+            if (input.Length != Util.CountMaskTypes(mask))
                 throw new MissingValuesException();
             
             return MaskFormatter.FormatMask(input, mask);

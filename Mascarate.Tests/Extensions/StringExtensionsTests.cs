@@ -140,4 +140,42 @@ public class StringExtensionsTests
         Assert.Equal(expectedResult, result);
         #endregion
     }
+
+    [Theory]
+    [InlineData("\\###-##", "#12-34", "1234")]
+    [InlineData(@"\###.##\#..*", "#12.34#..C", "1234C")]
+    [InlineData("**\\***", "A2*B3", "A2B3")]
+    public void UnMascarate_WhenRemovingAnSpecificMaskWithSkipInIt_ShouldReturnTheCorrectResultWithoutMask(
+        string mask,
+        string value,
+        string expectedResult
+    )
+    {
+        // Non Arrange Needed
+                
+        #region Act
+        var result = value.UnMascarate(mask);
+        #endregion
+        
+        #region Assert
+        Assert.Equal(expectedResult, result);
+        #endregion
+    }
+    
+    [Fact]
+    public void UnMascarate_WhenRemovingAllTypeMask_ShouldReturnOnlyLettersAndNumbers()
+    {
+        #region Arrange
+        const string masked = "123.456.789-10";
+        const string expected = "12345678910";
+        #endregion
+
+        #region Act
+        var result = masked.UnMascarate();
+        #endregion
+
+        #region Assert
+        Assert.Equal(expected, result);
+        #endregion
+    }
 }

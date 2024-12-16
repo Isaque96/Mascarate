@@ -9,12 +9,10 @@ namespace Mascarate.Extensions
     {
         public static string Mascarate(this string input, string mask)
         {
-            if (string.IsNullOrWhiteSpace(mask) ||
-                string.IsNullOrEmpty(mask))
+            if (string.IsNullOrWhiteSpace(mask) || string.IsNullOrEmpty(mask))
                 throw new ArgumentNullException(nameof(mask));
             
-            if (string.IsNullOrWhiteSpace(input) ||
-                string.IsNullOrEmpty(input))
+            if (string.IsNullOrWhiteSpace(input) || string.IsNullOrEmpty(input))
                 throw new ArgumentNullException(nameof(input));
             
             if (input.Length != Util.CountMaskTypes(mask))

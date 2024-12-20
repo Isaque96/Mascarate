@@ -2,6 +2,6 @@ namespace Mascarate.Configurations
 {
     public class GlobalConfigOptions
     {
-        public bool ShouldIgnore { get; set; }
+        public bool ShouldThrowFailureExceptions { get; set; }
     }
 }

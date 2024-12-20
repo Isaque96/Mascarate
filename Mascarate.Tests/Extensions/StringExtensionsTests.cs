@@ -6,7 +6,7 @@ namespace Mascarate.Tests.Extensions;
 public class StringExtensionsTests
 {
     [Fact]
-    public void Mascarate_ParameterStringIsNull_ThrowsArgumentNullException()
+    public void Mascarate_WhenParameterStringIsNull_ThrowsArgumentNullException()
     {
         #region Arrange
         string? nullString = null;

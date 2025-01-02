@@ -67,9 +67,9 @@ public class StringExtensionsTests
     public void Mascarate_WhenHasSkipOnMaskType_ShouldReturnTheLiteralValue()
     {
         #region Arrange
-        const string mask = @"##\**";
+        const string mask = @"##\*\\*";
         const string value = "12A";
-        const string expectedResult = "12*A";
+        const string expectedResult = @"12*\A";
         #endregion
 
         #region Act
@@ -142,7 +142,7 @@ public class StringExtensionsTests
     }
 
     [Theory]
-    [InlineData("\\###-##", "#12-34", "1234")]
+    [InlineData(@"\###-#\\#", @"#12-3\4", "1234")]
     [InlineData(@"\###.##\#..*", "#12.34#..C", "1234C")]
     [InlineData("**\\***", "A2*B3", "A2B3")]
     public void UnMascarate_WhenRemovingAnSpecificMaskWithSkipInIt_ShouldReturnTheCorrectResultWithoutMask(

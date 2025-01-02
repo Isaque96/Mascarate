@@ -10,7 +10,7 @@ namespace Mascarate.Extensions
     {
         public static string Mascarate(this string input, string mask)
         {
-            if (Validations(input, mask, out var exception))
+            if (Validations(input, mask, true, out var exception))
                 return MaskFormatter.FormatMask(input, mask);
             
             if (GlobalConfig.ShouldThrowFailureExceptions)
@@ -26,10 +26,16 @@ namespace Mascarate.Extensions
 
         public static string UnMascarate(this string input, string mask)
         {
-            return MaskFormatter.RemoveMask(input, mask);
+            if (Validations(input, mask, false, out var exception))
+                return MaskFormatter.RemoveMask(input, mask);
+            
+            if (GlobalConfig.ShouldThrowFailureExceptions)
+                throw exception;
+            
+            return null;
         }
 
-        private static bool Validations(string input, string mask, out Exception exception)
+        private static bool Validations(string input, string mask, bool mascarate, out Exception exception)
         {
             exception = null;
 
@@ -45,7 +51,7 @@ namespace Mascarate.Extensions
                 return false;
             }
 
-            if (input.Length != Util.CountMaskTypes(mask))
+            if (mascarate && input.Length != Util.CountMaskTypes(mask))
             {
                 exception = new MissingValuesException();
                 return false;

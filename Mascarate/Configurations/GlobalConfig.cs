@@ -4,7 +4,7 @@ namespace Mascarate.Configurations
 {
     public static class GlobalConfig
     {
-        public static bool ShouldThrowFailureExceptions { get; private set; }
+        public static bool ShouldThrowFailureExceptions { get; private set; } = true;
         
         public static void Configure(Action<GlobalConfigOptions> configure)
         {

@@ -16,9 +16,12 @@ namespace Mascarate.Utils
             for (var i = 0; i < mask.Length; i++)
             {
                 if (mask[i] != '\\') continue;
-                
+
                 if (i + 1 < mask.Length && mask[i + 1] == '\\')
+                {
                     i++;
+                    continue;
+                }
                 
                 count++;
             }

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Text;
 using Mascarate.Configurations;
 using Mascarate.Exceptions;
@@ -67,11 +66,6 @@ namespace Mascarate.Core
 
         public static string RemoveMask(string input, string mask)
         {
-            if (input is null) throw new ArgumentNullException(nameof(input), "Input must not be null.");
-            if (mask is null) throw new ArgumentNullException(nameof(mask), "Mask must not be null.");
-            if (input.Length == 0 || mask.Length == 0) 
-                throw new ArgumentException("Input and mask must not be empty.");
-
             var result = new StringBuilder();
             var inputIndex = 0;
 

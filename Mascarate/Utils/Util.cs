@@ -5,11 +5,6 @@ namespace Mascarate.Utils
 {
     public static class Util
     {
-        public static bool IsValidMaskType(char maskType)
-        {
-            return MaskTypes.Masks.Contains(maskType);
-        }
-
         private static int CountSlashes(string mask)
         {
             var count = 0;

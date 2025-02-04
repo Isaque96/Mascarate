@@ -1,3 +1,4 @@
+using Mascarate.Configurations;
 using Mascarate.Exceptions;
 using Mascarate.Extensions;
 
@@ -176,6 +177,24 @@ public class StringExtensionsTests
 
         #region Assert
         Assert.Equal(expected, result);
+        #endregion
+    }
+    
+    [Fact]
+    public void UnMascarate_WhenConfigIsSetToThrow_ShouldThrowException()
+    {
+        #region Arrange
+        GlobalConfig.Configure(c => c.ShouldThrowFailureExceptions = true);
+        const string mask = "###.###.###-#";
+        const string value = "123.456.789-10";
+        #endregion
+
+        #region Act
+        void Action() => value.UnMascarate(mask);
+        #endregion
+
+        #region Assert
+        Assert.Throws<ArgumentNullException>(Action);
         #endregion
     }
 }

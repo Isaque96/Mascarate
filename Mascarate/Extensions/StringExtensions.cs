@@ -35,7 +35,15 @@ namespace Mascarate.Extensions
             return null;
         }
 
-        private static bool Validations(string input, string mask, bool mascarate, out Exception exception)
+        public static bool MascarateValidate(this string input, string mask)
+        {
+            var validations = Validations(input, mask, false, out _);
+            var completeMaskValidation = MaskFormatter.ValidateMask(input, mask);
+            
+            return validations && completeMaskValidation;
+        }
+        
+        private static bool Validations(string input, string mask, bool isMascarate, out Exception exception)
         {
             exception = null;
 
@@ -51,13 +59,19 @@ namespace Mascarate.Extensions
                 return false;
             }
 
-            if (mascarate && input.Length != Util.CountMaskTypes(mask))
+            if (isMascarate)
             {
-                exception = new MissingValuesException();
-                return false;
+                if (input.Length == Util.CountMaskTypes(mask))
+                    return true;
+            }
+            else
+            {
+                if (input.Length == (mask.Length - Util.CountSlashes(mask, false)))
+                    return true;
             }
 
-            return true;
+            exception = new MissingValuesException();
+            return false;
         }
     }
 }

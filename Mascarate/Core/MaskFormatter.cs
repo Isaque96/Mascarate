@@ -7,7 +7,7 @@ namespace Mascarate.Core
 {
     internal static class MaskFormatter
     {
-        public static string FormatMask(string input, string mask)
+        internal static string FormatMask(string input, string mask)
         {
             var result = new StringBuilder();
             var inputIndex = 0;
@@ -59,12 +59,12 @@ namespace Mascarate.Core
             return result.ToString();
         }
 
-        public static string RemoveAnyMask(string input)
+        internal static string RemoveAnyMask(string input)
         {
             return new string(input.Where(char.IsLetterOrDigit).ToArray());
         }
 
-        public static string RemoveMask(string input, string mask)
+        internal static string RemoveMask(string input, string mask)
         {
             var result = new StringBuilder();
             var inputIndex = 0;
@@ -122,6 +122,51 @@ namespace Mascarate.Core
             }
 
             return result.ToString();
+        }
+        
+        internal static bool ValidateMask(string input, string mask)
+        {
+            var inputIndex = 0;
+
+            for (var i = 0; i < mask.Length; i++)
+            {
+                var maskChar = mask[i];
+
+                if (maskChar == '\\' && i + 1 < mask.Length)
+                    maskChar = mask[++i];
+
+                if (inputIndex >= input.Length)
+                    return false;
+
+                var inputChar = input[inputIndex];
+
+                switch (maskChar)
+                {
+                    case MaskTypes.NumericMask:
+                        if (!char.IsDigit(inputChar))
+                            return false;
+                        break;
+
+                    case MaskTypes.LetterMask:
+                        if (!char.IsLetter(inputChar))
+                            return false;
+                        break;
+
+                    case MaskTypes.AlphaNumericMask:
+                        if (!char.IsLetterOrDigit(inputChar))
+                            return false;
+                        break;
+
+                    default:
+                        if (inputChar != maskChar)
+                            return false;
+                        break;
+                }
+
+                inputIndex++;
+            }
+
+            return inputIndex >= input.Length;
         }
     }
 }

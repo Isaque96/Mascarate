@@ -3,9 +3,9 @@ using Mascarate.Configurations;
 
 namespace Mascarate.Utils
 {
-    public static class Util
+    internal static class Util
     {
-        private static int CountSlashes(string mask)
+        internal static int CountSlashes(string mask, bool isMascarate)
         {
             var count = 0;
             for (var i = 0; i < mask.Length; i++)
@@ -14,7 +14,8 @@ namespace Mascarate.Utils
 
                 if (i + 1 < mask.Length && mask[i + 1] == '\\')
                 {
-                    i++;
+                    if (isMascarate)
+                        i++;
                     continue;
                 }
                 
@@ -24,9 +25,9 @@ namespace Mascarate.Utils
             return count;
         }
 
-        public static int CountMaskTypes(string mask)
+        internal static int CountMaskTypes(string mask)
         {
-            return mask.Count(c => MaskTypes.Masks.Contains(c)) - CountSlashes(mask);
+            return mask.Count(c => MaskTypes.Masks.Contains(c)) - CountSlashes(mask, true);
         }
     }
 }

@@ -152,7 +152,7 @@ public class StringExtensionsTests
         string expectedResult
     )
     {
-        // Non Arrange Needed
+        // No Arrange Needed
                 
         #region Act
         var result = value.UnMascarate(mask);
@@ -194,7 +194,27 @@ public class StringExtensionsTests
         #endregion
 
         #region Assert
-        Assert.Throws<ArgumentNullException>(Action);
+        Assert.Throws<MissingValuesException>(Action);
+        #endregion
+    }
+    
+    [Theory]
+    [InlineData("123.456.789-10", "###.###.###-##", true)]
+    [InlineData("12.345.678/0001-99", "##.###.###/####-##", true)]
+    [InlineData("(11) 98765-4321", "(##) #####-####", true)]
+    [InlineData("123.456.789-0A", "###.###.###-##", false)]
+    [InlineData("12.345.678/0001", "##.###.###/####-##", false)]
+    [InlineData("(11) 9876-54321", "(##) #####-####", false)]
+    public void Validate_WhenMaskIsCorrect_ShouldReturnTrue(string value, string mask, bool expected)
+    {
+        // No Arrange Needed
+        
+        #region Act
+        var result = value.MascarateValidate(mask);
+        #endregion
+        
+        #region Assert
+        Assert.Equal(expected, result);
         #endregion
     }
 }

@@ -35,10 +35,10 @@ Install-Package Mascarate
 Use the `Apply` method to format a string with a mask:
 
 ```csharp
-using Mascarate;
+using Mascarate.Extensions;
 
 string cpf = "12345678901";
-string maskedCpf = Mascarate.Mask.Apply(cpf, "###.###.###-##"); // Result: "123.456.789-01"
+string maskedCpf = cpf.Mascarate("###.###.###-##"); // Result: "123.456.789-01"
 ```
 
 ### 2. Removing Masks
@@ -46,10 +46,10 @@ string maskedCpf = Mascarate.Mask.Apply(cpf, "###.###.###-##"); // Result: "123.
 Use the `Remove` method to remove masks from a string:
 
 ```csharp
-using Mascarate;
+using Mascarate.Extensions;
 
 string maskedCpf = "123.456.789-01";
-string unmaskedCpf = Mascarate.Mask.Remove(maskedCpf); // Result: "12345678901"
+string unmaskedCpf = maskedCpf.UnMascarate(); // Result: "12345678901"
 ```
 
 ### 3. Validating Masks
@@ -57,10 +57,10 @@ string unmaskedCpf = Mascarate.Mask.Remove(maskedCpf); // Result: "12345678901"
 Use the `Validate` method to check if a string matches the specified mask:
 
 ```csharp
-using Mascarate;
+using Mascarate.Extensions;
 
 string cpf = "123.456.789-01";
-bool isValid = Mascarate.Mask.Validate(cpf, "###.###.###-##"); // Result: true
+bool isValid = cpf.MascarateValidate("###.###.###-##"); // Result: true
 ```
 
 ### 4. Custom Masks
@@ -74,10 +74,10 @@ You can create custom masks using the following special characters:
 Example:
 
 ```csharp
-using Mascarate;
+using Mascarate.Extensions;
 
 string phoneNumber = "11987654321";
-string maskedPhone = Mascarate.Mask.Apply(phoneNumber, "(##) #####-####"); // Result: "(11) 98765-4321"
+string maskedPhone = phoneNumber.Mascarate("(##) #####-####"); // Result: "(11) 98765-4321"
 ```
 
 ## 📚 Practical Examples
@@ -86,18 +86,18 @@ string maskedPhone = Mascarate.Mask.Apply(phoneNumber, "(##) #####-####"); // Re
 
 ```csharp
 string cpf = "12345678901";
-string maskedCpf = Mascarate.Mask.Apply(cpf, "###.###.###-##"); // "123.456.789-01"
-string unmaskedCpf = Mascarate.Mask.Remove(maskedCpf); // "12345678901"
-bool isValidCpf = Mascarate.Mask.Validate(maskedCpf, "###.###.###-##"); // true
+string maskedCpf = cpf.Mascarate("###.###.###-##"); // "123.456.789-01"
+string unmaskedCpf = maskedCpf.UnMascarate("###.###.###-##"); // "12345678901"
+bool isValidCpf = maskedCpf.MascarateValidate("###.###.###-##"); // true
 ```
 
 ### CNPJ
 
 ```csharp
 string cnpj = "12345678000199";
-string maskedCnpj = Mascarate.Mask.Apply(cnpj, "##.###.###/####-##"); // "12.345.678/0001-99"
-string unmaskedCnpj = Mascarate.Mask.Remove(maskedCnpj); // "12345678000199"
-bool isValidCnpj = Mascarate.Mask.Validate(maskedCnpj, "##.###.###/####-##"); // true
+string maskedCnpj = cnpj.Mascarate("##.###.###/####-##"); // "12.345.678/0001-99"
+string unmaskedCnpj = maskedCnpj.UnMascarate("##.###.###/####-##"); // "12345678000199"
+bool isValidCnpj = maskedCnpj.MascarateValidate("##.###.###/####-##"); // true
 ```
 
 ### Phone Number

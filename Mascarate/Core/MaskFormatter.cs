@@ -1,13 +1,15 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Text;
 using Mascarate.Configurations;
 using Mascarate.Exceptions;
+using Mascarate.Utils;
 
 namespace Mascarate.Core
 {
     internal static class MaskFormatter
     {
-        internal static string FormatMask(string input, string mask)
+        private static string FormatMask(string input, string mask)
         {
             var result = new StringBuilder();
             var inputIndex = 0;
@@ -59,12 +61,12 @@ namespace Mascarate.Core
             return result.ToString();
         }
 
-        internal static string RemoveAnyMask(string input)
+        private static string RemoveFormatForAnyMask(string input)
         {
             return new string(input.Where(char.IsLetterOrDigit).ToArray());
         }
 
-        internal static string RemoveMask(string input, string mask)
+        private static string RemoveFormatMask(string input, string mask)
         {
             var result = new StringBuilder();
             var inputIndex = 0;
@@ -123,8 +125,8 @@ namespace Mascarate.Core
 
             return result.ToString();
         }
-        
-        internal static bool ValidateMask(string input, string mask)
+
+        private static bool ValidateMaskFormat(string input, string mask)
         {
             var inputIndex = 0;
 
@@ -167,6 +169,72 @@ namespace Mascarate.Core
             }
 
             return inputIndex >= input.Length;
+        }
+        
+        private static bool Validations(string input, string mask, bool isMascarate, out Exception exception)
+        {
+            exception = null;
+
+            if (string.IsNullOrWhiteSpace(mask) || string.IsNullOrEmpty(mask))
+            {
+                exception = new ArgumentNullException(nameof(mask));
+                return false;
+            }
+
+            if (string.IsNullOrWhiteSpace(input) || string.IsNullOrEmpty(input))
+            {
+                exception = new ArgumentNullException(nameof(input));
+                return false;
+            }
+
+            if (isMascarate)
+            {
+                if (input.Length == Util.CountMaskTypes(mask))
+                    return true;
+            }
+            else
+            {
+                if (input.Length == (mask.Length - Util.CountSlashes(mask, false)))
+                    return true;
+            }
+
+            exception = new MissingValuesException();
+            return false;
+        }
+        
+        internal static string ApplyMask(string input, string mask)
+        {
+            if (Validations(input, mask, true, out var exception))
+                return FormatMask(input, mask);
+            
+            if (GlobalConfig.ShouldThrowFailureExceptions)
+                throw exception;
+                
+            return null;
+        }
+    
+        internal static string RemoveMask(string str)
+        {
+            return RemoveFormatForAnyMask(str);
+        }
+
+        internal static string RemoveMask(string input, string mask)
+        {
+            if (Validations(input, mask, false, out var exception))
+                return RemoveFormatMask(input, mask);
+            
+            if (GlobalConfig.ShouldThrowFailureExceptions)
+                throw exception;
+            
+            return null;
+        }
+
+        internal static bool ValidateMask(string input, string mask)
+        {
+            var validations = Validations(input, mask, false, out _);
+            var completeMaskValidation = ValidateMaskFormat(input, mask);
+            
+            return validations && completeMaskValidation;
         }
     }
 }

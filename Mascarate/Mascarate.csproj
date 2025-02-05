@@ -4,17 +4,22 @@
         <TargetFramework>netstandard2.0</TargetFramework>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <PackageId>Mascarate</PackageId>
-        <Version>1.0.1</Version>
+        <Version>1.0.2</Version>
         <Authors>Isaque Schuwarte Silva</Authors>
         <Description>Mascarate is a lightweight, easy-to-use library for formatting, validating and removing masks in C# strings. Ideal for dealing with data such as CPF, CNPJ, telephone numbers, zip codes and much more.</Description>
         <PackageIcon>mascarate-ico.png</PackageIcon>
         <PackageTags>mask;formatting;validation;string-manipulation;cpf;cnpj;phone-number;zip-code;data-formatting;mask-removal;lightweight;easy-to-use;csharp;dotnet;utility;data-processing;input-formatting;regex-alternative;brazilian-data;internationalization</PackageTags>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
         <RepositoryUrl>https://github.com/Isaque96/Mascarate</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
+        <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
     </PropertyGroup>
 
     <ItemGroup>
+        <None Include="LICENSE.txt" Pack="true" PackagePath="\" />
         <None Include="mascarate-ico.png" Pack="true" PackagePath="\" />
+        <None Include="README.md" Pack="true" PackagePath="\"/>
     </ItemGroup>
     
 </Project>
